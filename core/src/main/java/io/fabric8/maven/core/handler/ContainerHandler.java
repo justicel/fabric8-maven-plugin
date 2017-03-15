@@ -33,6 +33,7 @@ import io.fabric8.maven.docker.config.BuildImageConfiguration;
 import io.fabric8.maven.docker.config.ImageConfiguration;
 import io.fabric8.utils.Strings;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -63,9 +64,17 @@ class ContainerHandler {
                 Probe livenessProbe = probeHandler.getProbe(config.getLiveness());
                 Probe readinessProbe = probeHandler.getProbe(config.getReadiness());
 
+                String imageName = imageConfig.getName();
+                String registry = imageConfig.getRegistry();
+                if (StringUtils.isNotBlank(registry)) {
+                    System.out.println("HACK: in ContainerHandler.getContainers(), registry = [" + registry + "], updating " +
+                        "image name from [" + imageName + "] to [" + registry + "/" + imageName + "]");
+                    imageName = registry + "/" + imageName;
+                }
+
                 Container container = new ContainerBuilder()
                     .withName(KubernetesResourceUtil.extractContainerName(project, imageConfig))
-                    .withImage(imageConfig.getName())
+                    .withImage(imageName)
                     .withImagePullPolicy(getImagePullPolicy(config))
                     .withEnv(envVarHandler.getEnvironmentVariables(config.getEnv()))
                     .withSecurityContext(createSecurityContext(config))
