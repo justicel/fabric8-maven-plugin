@@ -127,7 +127,34 @@ public class JavaExecGenerator extends BaseGenerator {
             .name(getImageName())
             .alias(getAlias())
             .buildConfig(buildBuilder.build());
-        configs.add(imageBuilder.build());
+
+        ImageConfiguration imageConfiguration = imageBuilder.build();
+
+        // try using pom config first (targeting Java 7 so can't use a stream)
+        String registry = null;
+        for (ImageConfiguration config : configs) {
+            if (StringUtils.isNotBlank(config.getRegistry())) {
+                registry = config.getRegistry();
+            }
+        }
+        // if nothing found, look for a command line property
+        if (registry == null) {
+            registry = System.getProperty("docker.registry");
+        }
+
+        if (StringUtils.isNotBlank(registry)) {
+            System.out.println("HACK: in JavaExecGenerator.customize(), setting registry value to [" + registry + "]");
+            try {
+                java.lang.reflect.Field registryField = imageConfiguration.getClass().getDeclaredField("registry");
+                registryField.setAccessible(true);
+                registryField.set(imageConfiguration, registry);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                log.error("Unable to set registry value [{}]", registry, e);
+            }
+        }
+
+        configs.add(imageConfiguration);
+
         return configs;
     }
 
