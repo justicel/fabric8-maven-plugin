@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.github.justicel</groupId>
+  <artifactId>fabric8-maven-parent</artifactId>
+  <versioning>
+    <versions>
+      <version>3.2-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170316233528</lastUpdated>
+  </versioning>
+</metadata>
