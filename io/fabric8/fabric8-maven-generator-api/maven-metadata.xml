@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.fabric8</groupId>
+  <artifactId>fabric8-maven-generator-api</artifactId>
+  <versioning>
+    <versions>
+      <version>3.2-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170316232754</lastUpdated>
+  </versioning>
+</metadata>
