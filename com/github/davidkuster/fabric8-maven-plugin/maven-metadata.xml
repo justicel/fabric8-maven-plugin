@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.github.davidkuster</groupId>
+  <artifactId>fabric8-maven-plugin</artifactId>
+  <versioning>
+    <latest>3.2-SNAPSHOT</latest>
+    <versions>
+      <version>3.2-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170316232852</lastUpdated>
+  </versioning>
+</metadata>
